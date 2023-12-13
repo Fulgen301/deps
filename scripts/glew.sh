@@ -8,7 +8,7 @@ until curl -L https://downloads.sourceforge.net/glew/glew-"$VERSION".tgz | tar -
 
 pushd glew-"$VERSION"/build
 
-cmake ./cmake -DBUILD_UTILS=Off $CMAKE_CONFIGURE_ARGS
+$CMAKE_CONFIGURE_BINARY ./cmake -DBUILD_UTILS=Off $CMAKE_CONFIGURE_ARGS
 cmake --build . --target glew_s $CMAKE_BUILD_ARGS
 cmake --install . $CMAKE_BUILD_ARGS
 

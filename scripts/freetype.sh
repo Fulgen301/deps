@@ -9,7 +9,7 @@ curl -L https://download-mirror.savannah.gnu.org/releases/freetype/freetype-"$VE
 mkdir build
 pushd build
 
-cmake ../freetype-"$VERSION" -DCMAKE_DISABLE_FIND_PACKAGE_BrotliDec=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_BZip2=TRUE "$@" $CMAKE_CONFIGURE_ARGS
+$CMAKE_CONFIGURE_BINARY ../freetype-"$VERSION" -DCMAKE_DISABLE_FIND_PACKAGE_BrotliDec=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_BZip2=TRUE "$@" $CMAKE_CONFIGURE_ARGS
 cmake --build . $CMAKE_BUILD_ARGS
 cmake --install . $CMAKE_BUILD_ARGS
 

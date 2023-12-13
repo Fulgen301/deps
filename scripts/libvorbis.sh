@@ -9,7 +9,7 @@ curl -L https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-"$VERSION".tar
 mkdir build
 pushd build
 
-cmake ../libvorbis-"$VERSION" $CMAKE_CONFIGURE_ARGS
+$CMAKE_CONFIGURE_BINARY ../libvorbis-"$VERSION" $CMAKE_CONFIGURE_ARGS
 cmake --build . $CMAKE_BUILD_ARGS
 cmake --install . $CMAKE_BUILD_ARGS
 

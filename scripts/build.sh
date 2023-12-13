@@ -23,6 +23,16 @@ function license()
 }
 export -f license
 
+function wasm_add_cmake_configuration_args()
+{
+	if [ "$OS" != "WASM" ]; then
+		return 0
+	fi
+
+	echo "CMAKE_CONFIGURE_ARGS=$CMAKE_CONFIGURE_ARGS $@" >> $GITHUB_ENV
+}
+export -f wasm_add_cmake_configuration_args
+
 if [ -n "$CHROOT" ]; then
 	CHROOT_="$CHROOT"
 	unset CHROOT
@@ -37,6 +47,13 @@ shift
 
 mkdir "$NAME"
 pushd "$NAME"
+
+CMAKE_CONFIGURE_BINARY=cmake
+
+if [ "$OS" = "WASM" ]; then
+	CMAKE_CONFIGURE_BINARY='emcmake cmake'
+fi
+
 source "$OLDPWD"/scripts/"$NAME".sh "$@"
 popd
 

@@ -9,7 +9,7 @@ curl -L "https://github.com/libsndfile/libsamplerate/releases/download/$VERSION/
 mkdir build
 pushd build
 
-cmake "../libsamplerate-$VERSION" \
+$CMAKE_CONFIGURE_BINARY "../libsamplerate-$VERSION" \
 -DBUILD_TESTING=Off \
 -DLIBSAMPLERATE_EXAMPLES=Off \
 $CMAKE_CONFIGURE_ARGS
@@ -20,3 +20,4 @@ cmake --install . $CMAKE_BUILD_ARGS
 popd
 
 license libsamplerate "libsamplerate-$VERSION/COPYING" 'BSD 2-Clause'
+wasm_add_cmake_configuration_args -DLIBSAMPLERATE_INCLUDE_DIR="$OUTPUT_DIR"/include

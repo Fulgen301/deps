@@ -9,7 +9,7 @@ curl -L https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-"$VERSION".tar.gz | 
 mkdir build
 pushd build
 
-cmake ../*ogg-* $CMAKE_CONFIGURE_ARGS
+$CMAKE_CONFIGURE_BINARY ../*ogg-* $CMAKE_CONFIGURE_ARGS
 cmake --build . $CMAKE_BUILD_ARGS
 cmake --install . $CMAKE_BUILD_ARGS
 

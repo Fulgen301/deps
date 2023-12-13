@@ -9,7 +9,7 @@ until curl -L https://downloads.sourceforge.net/sourceforge/libpng/libpng-"$VERS
 mkdir build
 pushd build
 
-cmake ../libpng-"$VERSION" -DPNG_SHARED=Off -DPNG_TESTS=Off -DSKIP_INSTALL_PROGRAMS=On $CMAKE_CONFIGURE_ARGS
+$CMAKE_CONFIGURE_BINARY ../libpng-"$VERSION" -DPNG_SHARED=Off -DPNG_TESTS=Off -DSKIP_INSTALL_PROGRAMS=On $CMAKE_CONFIGURE_ARGS
 cmake --build . --target png_static $CMAKE_BUILD_ARGS
 cmake --install . $CMAKE_BUILD_ARGS
 

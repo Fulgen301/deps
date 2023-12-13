@@ -14,7 +14,7 @@ pushd build
 
 perl -i -pe's/SDL2-static/SDL2/g' ../SDL2-"$VERSION"/CMakeLists.txt
 
-cmake ../SDL2-"$VERSION" \
+$CMAKE_CONFIGURE_BINARY ../SDL2-"$VERSION" \
 -DSDL_LIBSAMPLERATE=On \
 -DSDL_LIBSAMPLERATE_SHARED=Off \
 -DSDL_METAL=Off \

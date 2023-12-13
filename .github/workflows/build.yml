@@ -13,6 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - os: ubuntu-20.04
+            arch: x64
+            env: WASM
 
     runs-on: ${{ matrix.os }}
     env:
@@ -20,6 +23,12 @@ jobs:
       IS_RELEASE: ${{ startsWith(github.ref, 'refs/tags/') }}
     steps:
       - uses: actions/checkout@v3
+
+      - uses: mymindstorm/setup-emsdk@v13
+        if: ${{ matrix.env == 'WASM' }}
+        with:
+          version: 3.1.50
+          actions-cache-folder: 'emsdk-cache'
 
       - name: "Setup Directories"
         run: mkdir -p output output/lib output/include output/lc_licenses
@@ -61,21 +70,37 @@ jobs:
         run: |
           scripts/build.sh zlib
 
+      - name: Build OpenSSL
+        if: ${{ matrix.env != 'Windows' }}
+        run: |
+          scripts/build.sh openssl
+
       - name: Build non-Windows
         if: ${{ matrix.env != 'Windows' }}
         run: |
           scripts/build.sh libpng
           scripts/build.sh libjpeg-turbo
-          scripts/build.sh openssl
 
-      - name: Build
+      - name: Build Boost & Catch2
+        if: ${{ matrix.env != 'WASM' }}
         run: |
           scripts/build.sh boost
           scripts/build.sh catch2
+
+      - name: Build more
+        run: |
           scripts/build.sh libcurl
           scripts/build.sh fmt
           scripts/build.sh glew
+
+      - name: Build libsamplerate
+        if: ${{ matrix.env != 'WASM' }}
+        run: |
           scripts/build.sh libsamplerate
+
+      - name: Build SDL2
+        if: ${{ matrix.env != 'WASM' }}
+        run: |
           scripts/build.sh SDL2
 
       - name: Build Linux
@@ -86,12 +111,16 @@ jobs:
           scripts/build.sh fluidsynth
 
       - name: Build more
+        if: ${{ matrix.env != 'WASM' }}
         run: |
           scripts/build.sh libogg
           scripts/build.sh libvorbis
           scripts/build.sh libmodplug
           scripts/build.sh mpg123
           scripts/build.sh SDL2_mixer
+
+      - name: Build FreeType
+        run: |
           scripts/build.sh freetype -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=TRUE
 
       - name: Remove bin
