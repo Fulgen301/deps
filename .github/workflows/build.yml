@@ -13,18 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
-            arch: x86
-            env: Windows
-          - os: windows-latest
-            arch: x64
-            env: Windows
-          - os: ubuntu-20.04
-            arch: x64
-            env: Linux
-          - os: macos-12
-            arch: x64
-            env: Mac
 
     runs-on: ${{ matrix.os }}
     env:
